@@ -66,30 +66,20 @@ showWeatherData = (weatherData) => {
     localStorage.setItem(weatherData.name, JSON.stringify(cityData));
 
     document.querySelector(".button-search-history").innerHTML += `
-    <button type="button" class='btn btn-lg btn-dark city-button'>${weatherData.name}</button>`;
-
+    <button type="button" class='btn btn-lg btn-dark city-button ${weatherData.name}'>${weatherData.name}</button>`;
     document.querySelector(".city-button").addEventListener("click", () => {
-      let city = JSON.parse(localStorage.getItem(weatherData.name === cityData.name ? true : false));
-      document.getElementById("city-name").innerText = cityData.name;
-      document.getElementById("weather-type").innerText = cityData.weatherType;
-      document.getElementById("temp").innerText = cityData.temp;
-      document.getElementById("min-temp").innerText = cityData.minTemp;
-      document.getElementById("max-temp").innerText = cityData.maxTemp;
+      let key = document.querySelector(`.${cityData.name}`).value;
+      let city = JSON.parse(localStorage.getItem(localStorage.key(key)));
+      document.getElementById("city-name").innerText = city.name;
+      document.getElementById("weather-type").innerText = city.weatherType;
+      document.getElementById("temp").innerText = city.temp;
+      document.getElementById("min-temp").innerText = city.minTemp;
+      document.getElementById("max-temp").innerText = city.maxTemp;
       console.log(city);
     });
   });
 };
 
-console.log(localStorage.key(0));
-
 document.querySelector(".clear-button").addEventListener("click", () => {
   localStorage.clear();
 });
-
-
-
-const check = document.querySelector(".city-button").
-
-for(let i = 0; i < localStorage.length; i++){
-  
-}
