@@ -36,7 +36,6 @@ searchCity = () => {
   getWeatherData(city)
     .then((response) => {
       showWeatherData(response);
-      storeCity(response);
     })
     .catch((err) => {
       console.log(err);
@@ -54,10 +53,43 @@ showWeatherData = (weatherData) => {
   document.getElementById("temp").innerText = weatherData.main.temp;
   document.getElementById("min-temp").innerText = weatherData.main.temp_min;
   document.getElementById("max-temp").innerText = weatherData.main.temp_max;
-  storeCity(weatherData);
+
+  document.querySelector(".store-city").addEventListener("click", () => {
+    const cityData = {
+      name: weatherData.name,
+      weatherType: weatherData.weather[0].main,
+      temp: weatherData.main.temp,
+      minTemp: weatherData.main.temp_min,
+      maxTemp: weatherData.main.temp_max,
+    };
+
+    localStorage.setItem(weatherData.name, JSON.stringify(cityData));
+
+    document.querySelector(".button-search-history").innerHTML += `
+    <button type="button" class='btn btn-lg btn-dark city-button'>${weatherData.name}</button>`;
+
+    document.querySelector(".city-button").addEventListener("click", () => {
+      let city = JSON.parse(localStorage.getItem(weatherData.name === cityData.name ? true : false));
+      document.getElementById("city-name").innerText = cityData.name;
+      document.getElementById("weather-type").innerText = cityData.weatherType;
+      document.getElementById("temp").innerText = cityData.temp;
+      document.getElementById("min-temp").innerText = cityData.minTemp;
+      document.getElementById("max-temp").innerText = cityData.maxTemp;
+      console.log(city);
+    });
+  });
 };
 
-document.querySelector("store-city").addEventListener("click", () => {
-  document.querySelector("button-search-history").innerHTML = `
-  <button type="button">City</button>`;
+console.log(localStorage.key(0));
+
+document.querySelector(".clear-button").addEventListener("click", () => {
+  localStorage.clear();
 });
+
+
+
+const check = document.querySelector(".city-button").
+
+for(let i = 0; i < localStorage.length; i++){
+  
+}
