@@ -55,31 +55,56 @@ showWeatherData = (weatherData) => {
   document.getElementById("max-temp").innerText = weatherData.main.temp_max;
 
   document.querySelector(".store-city").addEventListener("click", () => {
-    const cityData = {
-      name: weatherData.name,
-      weatherType: weatherData.weather[0].main,
-      temp: weatherData.main.temp,
-      minTemp: weatherData.main.temp_min,
-      maxTemp: weatherData.main.temp_max,
+    let citycity = (document.querySelector(".button-search-history").innerHTML += `
+  <button type="button" class="btn btn-lg btn-dark city-button" id="${weatherData.name}" onClick="getCity(this.id)">${weatherData.name}</button>`);
+    console.log(citycity);
+
+    getCity = (city) => {
+      getWeatherData(city)
+        .then((response) => {
+          showWeatherData(response);
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
-
-    localStorage.setItem(weatherData.name, JSON.stringify(cityData));
-
-    document.querySelector(".button-search-history").innerHTML += `
-    <button type="button" class='btn btn-lg btn-dark city-button ${weatherData.name}'>${weatherData.name}</button>`;
-    document.querySelector(".city-button").addEventListener("click", () => {
-      let key = document.querySelector(`.${cityData.name}`).value;
-      let city = JSON.parse(localStorage.getItem(localStorage.key(key)));
-      document.getElementById("city-name").innerText = city.name;
-      document.getElementById("weather-type").innerText = city.weatherType;
-      document.getElementById("temp").innerText = city.temp;
-      document.getElementById("min-temp").innerText = city.minTemp;
-      document.getElementById("max-temp").innerText = city.maxTemp;
-      console.log(city);
-    });
   });
 };
 
-document.querySelector(".clear-button").addEventListener("click", () => {
-  localStorage.clear();
+document.getElementById("clear-history").addEventListener("click", () => {
+  let button = document.getElementById(`${weatherData.name}`);
+  button.parentNode.removeChild(button);
+  console.log("working");
 });
+// document.querySelector(".button-search-history").innerHTML = `
+// `;
+// });
+
+// document.querySelector(".store-city").addEventListener("click", () => {
+//   const cityData = {
+//     name: weatherData.name,
+//     // weatherType: weatherData.weather[0].main,
+//     // temp: weatherData.main.temp,
+//     // minTemp: weatherData.main.temp_min,
+//     // maxTemp: weatherData.main.temp_max,
+//   };
+
+//   localStorage.setItem(weatherData.name, JSON.stringify(cityData));
+
+//   document.querySelector(".button-search-history").innerHTML += `
+//   <button type="button" class='btn btn-lg btn-dark city-button ${weatherData.name}'>${weatherData.name}</button>`;
+//   document.querySelector(".city-button").addEventListener("click", () => {
+//     // let key = document.querySelector(`.${weatherData.name}`).innerHTML;
+//     let key = document.querySelector(`.`).innerHTML;
+
+//     // let city = JSON.parse(localStorage.getItem(localStorage.key(key)));
+//     console.log();
+//     // document.getElementById("city-name").innerText = city.name;
+//     // document.getElementById("weather-type").innerText = city.weatherType;
+//     // document.getElementById("temp").innerText = city.temp;
+//     // document.getElementById("min-temp").innerText = city.minTemp;
+//     // document.getElementById("max-temp").innerText = city.maxTemp;
+//     // console.log(city);
+//   });
+// });
